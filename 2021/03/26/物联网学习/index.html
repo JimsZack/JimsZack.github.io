@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  
+  <script src="/live2d/autoload.js"></script>
+  
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/[email protected]/pjax.js"></script>
+
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/author.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/author.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.cat.net/css?family=Lato:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jimszack.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1@H4l0&#96; &#96;2020-11-25 15:10&#96; &#96;字数 9752&#96; &#96;阅读 3407  IOT 安全实战资料收集整合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物联网学习">
+<meta property="og:url" content="https://jimszack.github.io/2021/03/26/%E7%89%A9%E8%81%94%E7%BD%91%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="AngelSnow">
+<meta property="og:description" content="1@H4l0&#96; &#96;2020-11-25 15:10&#96; &#96;字数 9752&#96; &#96;阅读 3407  IOT 安全实战资料收集整合">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jimszack.github.io/.io//image.png">
+<meta property="og:image" content="http://static.zybuluo.com/H4l0/mv5wagjw4v279qlohwdqlfv4/image.png">
+<meta property="article:published_time" content="2021-03-26T04:02:53.000Z">
+<meta property="article:modified_time" content="2021-03-26T04:03:45.337Z">
+<meta property="article:author" content="JimsZack">
+<meta property="article:tag" content="安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jimszack.github.io/.io//image.png">
+
+<link rel="canonical" href="https://jimszack.github.io/2021/03/26/%E7%89%A9%E8%81%94%E7%BD%91%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>物联网学习 | AngelSnow</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AngelSnow</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">春花秋月 夏荷冬雪</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/JimsZack" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jimszack.github.io/2021/03/26/%E7%89%A9%E8%81%94%E7%BD%91%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="JimsZack">
+      <meta itemprop="description" content="优游涵泳">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AngelSnow">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          物联网学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-26 12:02:53 / 修改时间：12:03:45" itemprop="dateCreated datePublished" datetime="2021-03-26T12:02:53+08:00">2021-03-26</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@H4l0&#96; &#96;2020-11-25 15:10&#96; &#96;字数 9752&#96; &#96;阅读 3407</span><br></pre></td></tr></table></figure>
+
+<h1 id="IOT-安全实战资料收集整合"><a href="#IOT-安全实战资料收集整合" class="headerlink" title="IOT 安全实战资料收集整合"></a>IOT 安全实战资料收集整合</h1><span id="more"></span>
+
+
+
+<hr>
+<ul>
+<li>IOT 安全实战资料收集整合<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%96%B0%E6%89%8B%E5%90%91%E6%80%BB%E7%BB%93%E6%80%A7%E8%B5%84%E6%96%99">新手向|总结性资料</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BA%E4%BB%B6%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA">固件模拟环境搭建</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BA%E4%BB%B6%E6%8F%90%E5%8F%96%E5%9B%BA%E4%BB%B6%E5%88%86%E6%9E%90">固件提取&amp;固件分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#vxworksrtos-%E7%B3%BB%E7%BB%9F%E5%9B%BA%E4%BB%B6%E5%88%86%E6%9E%90">Vxworks、RTOS 系统固件分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E8%A3%B8%E6%9C%BA%E5%9B%BA%E4%BB%B6%E5%88%86%E6%9E%90">裸机固件分析</a></li>
+<li>固件加密处理<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BA%E4%BB%B6%E4%BF%AE%E6%94%B9%E9%87%8D%E6%89%93%E5%8C%85">固件修改/重打包</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95">固件调试</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86">信息收集</a></li>
+</ul>
+</li>
+<li>实例漏洞分析<ul>
+<li>路由器<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E">命令执行漏洞</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%A0%88%E6%BA%A2%E5%87%BA">拒绝服务&amp;栈溢出</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87">未授权访问/认证绕过</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2">信息泄露</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%A0%86%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8">堆漏洞利用</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#mikrotik">MikroTik</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#upnp-%E7%9B%B8%E5%85%B3%E6%BC%8F%E6%B4%9E">UPNP 相关漏洞</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#smb">SMB</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#snmp">SNMP</a></li>
+</ul>
+</li>
+<li>摄像头安全<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E9%BB%98%E8%AE%A4%E5%AF%86%E7%A0%81%E5%92%8C%E9%BB%98%E8%AE%A4-rtsp-%E6%B5%81%E9%93%BE%E6%8E%A5">默认密码和默认 RTSP 流链接</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E9%97%A8%E9%94%81%E5%AE%89%E5%85%A8">门锁安全</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%99%BA%E8%83%BD%E9%9F%B3%E7%AE%B1%E5%AE%89%E5%85%A8">智能音箱安全</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%A3%B8%E6%9C%BA%E8%AE%BE%E5%A4%87%E5%9B%BA%E4%BB%B6%E9%80%86%E5%90%91">嵌入式/裸机设备固件逆向</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%99%BA%E8%83%BD%E7%BB%88%E7%AB%AF">智能终端</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%99%BA%E8%83%BD%E6%89%8B%E7%8E%AF-%E6%99%BA%E8%83%BD%E6%89%8B%E8%A1%A8">智能手环 &amp; 智能手表</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%85%B6%E4%BB%96%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87%E5%B7%A5%E6%8E%A7%E8%AE%BE%E5%A4%87">其他智能设备/工控设备</a></li>
+<li>网络设备<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#nas">NAS</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#sonicewall">sonicewall</a></li>
+</ul>
+</li>
+<li>无线电安全<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E8%93%9D%E7%89%99">蓝牙</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#zigbee">zigbee</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF%E6%8A%80%E5%B7%A7">漏洞挖掘思路/技巧</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8">安全启动</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8">相关工具使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#iot-%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91">IOT 安全开发</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#iot-%E5%A4%A7%E7%89%9B%E5%8D%9A%E5%AE%A2">IOT 大牛博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#fuzz-unicorn">fuzz &amp;&amp; unicorn</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#iot-%E5%AE%89%E5%85%A8%E8%A7%86%E9%A2%91%E6%95%99%E5%AD%A6">IOT 安全视频教学</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BA%E4%BB%B6%E5%8A%A0%E5%AF%86">固件加密</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#ctf-%E9%A2%98%E7%9B%AE">CTF 题目</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BD%E5%A4%96%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0">国外技术文章</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%9B%BA%E4%BB%B6%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87">固件安全相关论文</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">嵌入式基础知识</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">文件系统</a></li>
+<li>相关命令<ul>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#jffs2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%A4%84%E7%90%86">jffs2 文件系统的处理</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E4%B8%8B%E8%BD%BD">路由器固件下载</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BA%E4%BB%B6">摄像头固件</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E8%AE%BE%E5%A4%87%E4%BE%9B%E5%BA%94%E5%95%86">设备供应商</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E4%BA%8B%E4%BB%B6%E6%8A%A5%E9%81%93">事件报道</a></li>
+<li><a target="_blank" rel="noopener" href="https://zybuluo.com/H4l0/note/1524758#%E7%9F%A5%E8%AF%86%E6%98%9F%E7%90%83">知识星球</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="新手向-总结性资料"><a href="#新手向-总结性资料" class="headerlink" title="新手向|总结性资料"></a>新手向|总结性资料</h2><p><a target="_blank" rel="noopener" href="https://dassecurity-labs.github.io/HatLab_IOT_Wiki/">海特实验室 IOT WIKI</a></p>
+<p><a target="_blank" rel="noopener" href="https://iot-security.wiki/">伏辰实验室-物联网安全百科</a></p>
+<p><a target="_blank" rel="noopener" href="https://book.yunzhan365.com/tkgd/lzkp/mobile/index.html">绿盟 - 智能设备安全分析手册</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1045/">物联网安全从入门到入坑</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Wc6rE_2rVKHOPoCQzmGvKg">小议智能设备安全研究</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/V33RU/IoTSecurity101">https://github.com/V33RU/IoTSecurity101</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2278">https://xz.aliyun.com/t/2278</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/future-sec">伏宸安全实验室-知乎专栏</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.polaris-lab.com/index.php/archives/48/">物联网（IOT）安全测试经验总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2278">OWASP TOP10 物联网漏洞一览</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.sec-wiki.com/news/index/tag/device/">secwiki - 设备安全</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/155/">HG533路由器分析教程之二：搜寻固件</a></p>
+<h2 id="固件模拟环境搭建"><a href="#固件模拟环境搭建" class="headerlink" title="固件模拟环境搭建"></a>固件模拟环境搭建</h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/3826">路由器漏洞挖掘测试环境的搭建之问题总结</a></p>
+<h2 id="固件提取-amp-固件分析"><a href="#固件提取-amp-固件分析" class="headerlink" title="固件提取&amp;固件分析"></a>固件提取&amp;固件分析</h2><p><a target="_blank" rel="noopener" href="http://www.devttys0.com/2011/06/mystery-file-system/">http://www.devttys0.com/2011/06/mystery-file-system/</a><br><a target="_blank" rel="noopener" href="http://www.devttys0.com/2011/05/reverse-engineering-firmware-linksys-wag120n/">http://www.devttys0.com/2011/05/reverse-engineering-firmware-linksys-wag120n/</a></p>
+<p><a target="_blank" rel="noopener" href="http://xdxd.love/2015/08/24/%E9%80%86%E5%90%91%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E4%B9%8B%E8%A7%A3%E5%8C%85/">逆向路由器固件之解包</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/771/">基于 VxWorks 的嵌入式设备固件分析方法介绍</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/75635.html">TP-Link wr886nv7-V1.1.0 路由器分析 – 固件初步分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/6q3zAaS4jV_Mw3qvgtngBw">TP-Link wr886nv7-V1.1.0 路由器分析 - VxWorks cmd命令行获取及使用方法</a><br><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/75636.html">https://www.secpulse.com/archives/75636.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ssooking/articles/6144577.html">物联网设备的固件分析技术</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/176481">VxWorks固件逆向：WRT54Gv8</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/613/">工控漏洞挖掘方法之固件逆向分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/leekwen/article/details/53635462">路由固件的逆向解包及破解方法</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/180864">深入分析Ewon Flexy物联网路由器（下）</a></p>
+<p><a target="_blank" rel="noopener" href="https://cq674350529.github.io/2019/03/18/D-Link-DIR-850L%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%86%E6%9E%90%E4%B9%8B%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87shell/">D-Link DIR-850L路由器分析之获取设备shell</a></p>
+<p><a target="_blank" rel="noopener" href="https://cq674350529.github.io/2018/09/19/TP-Link-wr886v6-%E5%9B%BA%E4%BB%B6%E8%A7%A3%E6%9E%90/">TP-Link wr886nv6 固件解析</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.devttys0.com/2011/07/reverse-engineering-vxworks-firmware-wrt54gv8/">Reverse Engineering VxWorks Firmware: WRT54Gv8</a></p>
+<p><a target="_blank" rel="noopener" href="http://zeroyu.xyz/2019/08/15/How_to_start_IoT_Reverse/">IoT固件逆向入门</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/81577.html">安全小课堂第118期【IOT漏洞挖掘之路由器】</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/ics-articles/210776.html">关于IoT安全我有话说</a></p>
+<p><a target="_blank" rel="noopener" href="https://security.tencent.com/index.php/blog/msg/91">智能路由器安全特性分析</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.devttys0.com/2014/10/reversing-d-links-wps-pin-algorithm/">Reversing D-Link’s WPS Pin Algorithm</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/rT53P9EW4xLFV9JLbnLroQ">D-Link DIR-816 A2路由器安全研究分享</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/k1two2/p/7072709.html">路由器固件安全分析技术（一）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/terminal/75524.html">极路由安全设计架构分析</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/terminal/76046.html">https://www.freebuf.com/articles/terminal/76046.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E9h0lT184wBiDyojuWx1CA">binwalk提取固件失败</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Sxi9fQ_Jtj5xC5gm-nr5WQ">U-boot详解：板子上电时都干了些什么</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/l73iLAayzajs4HQgnnIpYg">IOT物理安全-固件提取基础(1)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/C00kie-/workshop-materials">IoT固件提取以及固件分析的workshop资料–Jett</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.nsfocus.net/0320-goahead-asp/">固件分析之GoAhead框架ASP文件提取</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UCW2yAtXFPQWz-p2XPHHDA">摄像头 SPI 固件提取</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/468/#_8">物联网硬件安全分析基础-固件提取</a></p>
+<h2 id="Vxworks、RTOS-系统固件分析"><a href="#Vxworks、RTOS-系统固件分析" class="headerlink" title="Vxworks、RTOS 系统固件分析"></a>Vxworks、RTOS 系统固件分析</h2><h2 id="裸机固件分析"><a href="#裸机固件分析" class="headerlink" title="裸机固件分析"></a>裸机固件分析</h2><p><a target="_blank" rel="noopener" href="https://leveldown.de/blog/svd-loader/">SVD-Loader for Ghidra: Simplifying bare-metal ARM reverse engineering<br>Learn hands-on IoT &amp; embedded hacking in one of our trainings!</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DigitalSecurity/nrf5x-tools">https://github.com/DigitalSecurity/nrf5x-tools</a></p>
+<h2 id="固件加密处理"><a href="#固件加密处理" class="headerlink" title="固件加密处理"></a>固件加密处理</h2><p><a target="_blank" rel="noopener" href="https://5alt.me/2017/08/%E6%9F%90%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87%E5%9B%BA%E4%BB%B6%E8%A7%A3%E5%AF%86/">某智能设备固件解密</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/198311">如何处理加密路由器固件</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.nsfocus.net/hmi-firmware-decryption-0522/">HMI固件解密思路</a></p>
+<h3 id="固件修改-重打包"><a href="#固件修改-重打包" class="headerlink" title="固件修改/重打包"></a>固件修改/重打包</h3><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/649/#21-u-boot">摄像头漏洞挖掘入门教程（固件篇）</a><br><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6053">固件修改及编译记录</a><br><a target="_blank" rel="noopener" href="https://www.uedbox.com/post/20483/">https://www.uedbox.com/post/20483/</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0m6amKhqlk8qR6dgrzPkyQ">物联网安全｜手把手带你制作恶意固件</a><br><a target="_blank" rel="noopener" href="https://paper.seebug.org/1036/#1">D-Link DIR-816 A2路由器安全研究分享</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0ZU3aitKg-qxRh17dKd-_Q">针对某款摄像头设备的固件重打包及root shell获取过程</a><br><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/85036">【技术分享】物联网设备的固件分析技术</a></p>
+<h3 id="固件调试"><a href="#固件调试" class="headerlink" title="固件调试"></a>固件调试</h3><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/506/">如何通过 TTL 调试光猫</a></p>
+<h3 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h3><p><a target="_blank" rel="noopener" href="http://xdxd.love/2015/08/24/%E9%80%86%E5%90%91%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E4%B9%8B%E4%BA%8C/">逆向路由器固件之信息泄露</a><br><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/terminal/76481.html">逆向路由器固件之敏感信息泄露 Part2</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27446553/article/details/79125129">tenda 某路由器信息泄露查找</a></p>
+<h2 id="实例漏洞分析"><a href="#实例漏洞分析" class="headerlink" title="实例漏洞分析"></a>实例漏洞分析</h2><h3 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h3><h4 id="命令执行漏洞"><a href="#命令执行漏洞" class="headerlink" title="命令执行漏洞"></a>命令执行漏洞</h4><ol>
+<li><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/879/">重现 TP-Link SR20 本地网络远程代码执行漏洞</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/183202">由一道工控路由器固件逆向题目看命令执行漏洞</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/183326">分析Belkin SURF路由器中的多个漏洞</a>（缓冲区溢出、后门）</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/search?s=%E8%B7%AF%E7%94%B1%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98">H4lo - 路由器漏洞分析系列</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/author/kczwa1">kczwa1 - 路由器 CVE 复现</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MjM5NjM2NDU0Ng==&mid=2450189577&idx=1&sn=ad2f8f7089f9c67ba6e6676e1cb933a2&chksm=b11425648663ac7214afcacf625f4e1f58647ff90dc83aea5764a10c2b55463b20ba0d592848&token=1945049632&lang=zh_CN&scene=21#wechat_redirect">360 IOT 人才培养计划</a><br><a target="_blank" rel="noopener" href="https://bbs.ichunqiu.com/thread-32773-1-1.html?from=beef">https://bbs.ichunqiu.com/thread-32773-1-1.html?from=beef</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/terminal/14425.html">腾达 Tenda 路由器后门分析</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.heibai.org/post/1395.html">D-Link 路由器HNAP协议系列漏洞披露（DIR-823G、DIR-878、DNS 重绑定攻击）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/84912">Dlink DIR 路由器HNAP登录函数的多个漏洞</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://www.devttys0.com/2015/04/hacking-the-d-link-dir-890l/">dir-890l 命令执行漏洞分析</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/HacTF/p/8052279.html">D-Link 系列路由器漏洞挖掘入门</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/35760.html">TP-LINK wr-842n 等多款无线路由器（新界面2015）存在多个致命漏洞</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/p_lQQ_X4up004LCpNHyrnw">实测一款IoT路由的安全性如何？从web到硬件，我们进行了全面的漏洞挖掘和分析（下）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.securityartwork.es/2018/01/25/some-vulnerability-in-asus-routers/">Some vulnerability in ASUS routers</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/448/">TP-LINK WR941N路由器研究</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.knownsec.com/2015/01/report-of-asua-router-9999-port-remote-command-execution-v1/">华硕路由器9999端口远程命令执行研究报告 V1</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/187923">分析多款D-Link路由器中的未授权RCE漏洞</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-225671.htm">腾达AC15路由器上的远程代码(CVE-2018-5767)执行演练</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.orange.tw/2019/11/HiNet-GPON-Modem-RCE.html?nsukey=Z+R9JgOkzUjLo8kbR45klrA5HZVClqg+g27Fyo6HW0z+AXWeGL38o75v6cFXTVLUeBaTpMVhhszEphXPakYx+3ZBRsHBRBp4x17HzOp9oB2K/XvK9iSBOLXDe/gKVn4T+8MDkZVzEDHgILZPfe6WXMbcpe20UQlKs8ajTpNynCo=">你用它上網，我用它進你內網! 中華電信數據機遠端代碼執行漏洞-光猫</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/k1two2/p/5808839.html">必虎路由器大量高危漏洞分析</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://nosec.org/home/detail/3772.html">D-Link DIR-859的RCE漏洞（CVE-2019–17621）</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/TzFepaBpYnMbZ8Mep4IXwA">D-Link DIR-859 RCE漏洞（CVE-2019-17621）分析复现</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://wzt.ac.cn/2019/09/18/D-Link_BUG/">D-Link DIR-878 路由器存在漏洞两枚</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://medium.com/@s1kr10s/d-link-dir-859-unauthenticated-rce-en-ssdpcgi-http-st-cve-2019-20215-es-6ec205f5cf">DLINK DIR-859 ssdpcgi 命令注入</a></p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/185773#h2-11">Pulse Secure SSL VPN远程代码执行漏洞利用与分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/202671">TP-Link Archer A7命令注入漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/202213">D-Link DSL-2640B多个漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.pentestpartners.com/security-blog/pwning-cctv-cameras/">https://www.pentestpartners.com/security-blog/pwning-cctv-cameras/</a></p>
+<p><a target="_blank" rel="noopener" href="https://alephsecurity.com/2020/01/14/ruckus-wireless/">ruckus-wireless</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1311/#3">Netgear Nighthawk R8300 upnpd PreAuth RCE 分析与复现</a><br><a target="_blank" rel="noopener" href="https://ssd-disclosure.com/ssd-advisory-netgear-nighthawk-r8300-upnpd-preauth-rce/">https://ssd-disclosure.com/ssd-advisory-netgear-nighthawk-r8300-upnpd-preauth-rce/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/decentL/IoT/blob/master/Phicomm/remote-code-execution.md">PHICOMM K2 安全漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://unit42.paloaltonetworks.com/6-new-d-link-vulnerabilities-found-on-home-routers/%E3%80%81">6 New Vulnerabilities Found on D-Link Home Routers</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.securityevaluators.com/new-vulnerabilities-in-totolink-a3002ru-d6f42a081154">New Vulnerabilities in TOTOLINK A3002RU</a></p>
+<p><a target="_blank" rel="noopener" href="http://lab.xinruisec.com/2019/09/05/Sapido%E5%A4%9A%E6%AC%BE%E8%B7%AF%E7%94%B1%E5%99%A8%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/">Sapido多款路由器命令执行漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b0e514557c79">NETGEAR 系列路由器命令执行漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://seclists.org/fulldisclosure/2015/Feb/56">NetGear WNDR Authentication Bypass / Information Disclosure</a><br><a target="_blank" rel="noopener" href="https://github.com/darkarnium/secpub/tree/master/Vulnerabilities/NetGear/SOAPWNDR">https://github.com/darkarnium/secpub/tree/master/Vulnerabilities/NetGear/SOAPWNDR</a></p>
+<p><a target="_blank" rel="noopener" href="https://es-la.tenable.com/security/research/tra-2020-60">TP-Link Archer A7 v5 Router USB Symlink Following Vulnerability</a></p>
+<h4 id="拒绝服务-amp-栈溢出"><a href="#拒绝服务-amp-栈溢出" class="headerlink" title="拒绝服务&amp;栈溢出"></a>拒绝服务&amp;栈溢出</h4><p><a target="_blank" rel="noopener" href="https://github.com/PAGalaxyLab/VulInfo/blob/master/TP-Link/WR886N/inetd_task_dos_13/README.md">TP-LINK wr-886n 拒绝服务</a></p>
+<p><a target="_blank" rel="noopener" href="https://cq674350529.github.io/2019/03/01/CVE-2018-0296-Cisco-ASA-%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">CVE-2018-0296 Cisco ASA 拒绝服务漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1039/">CVE-2019-1663 Cisco 的多个低端设备的堆栈缓冲区溢出漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=upnp">https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=upnp</a></p>
+<p><a target="_blank" rel="noopener" href="https://securityintelligence.com/buffer-overflow-vulnerability-in-tp-link-routers-can-allow-remote-attackers-to-take-control/">tplink wr940 缓冲区溢出</a></p>
+<p><a target="_blank" rel="noopener" href="https://ctrsec.io/index.php/2020/02/12/cve-2020-8962-d-link-dir-842-stack-based-buffer-overflow/">dir-842 rev.c 栈溢出</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/iamstudy/articles/Asuswrt_RT-AC68U_CVE-2018-6636_Detail.html">Asuswrt RT-AC68U 华硕路由器文件删除漏洞 &amp;&amp; 栈溢出</a></p>
+<p><a target="_blank" rel="noopener" href="https://starlabs.sg/advisories/18-20336/">ASUSWRT Stack Overflow in wanduck.c</a></p>
+<p><a target="_blank" rel="noopener" href="https://bierbaumer.net/security/asuswrt/#session-stealing">ASUSWRT - Multiple Vulnerabilities</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/R2V6LWyD2RqLkXHIRUlZKg">Netgear R6400 upnp栈溢出漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://devco.re/blog/2019/12/23/how-binary-dog-survives-in-web-world/">openfind mail2000 栈溢出漏洞分析&amp;利用</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/202054#h2-0">CVE-2020-3119 Cisco CDP 协议栈溢出漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://slashd.ga/2020/03/draytek-vulnerabilities/">draytek-vulnerabilities</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.grimm-co.com/2020/06/soho-device-exploitation.html">netgear-vulnerabilities</a></p>
+<p><a target="_blank" rel="noopener" href="http://bobao.360.cn/learning/detail/195.html">http://bobao.360.cn/learning/detail/195.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.pentestpartners.com/security-blog/cve-2019-12103-analysis-of-a-pre-auth-rce-on-the-tp-link-m7350-with-ghidra/">https://www.pentestpartners.com/security-blog/cve-2019-12103-analysis-of-a-pre-auth-rce-on-the-tp-link-m7350-with-ghidra/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.securityevaluators.com/tenda-ac1900-vulnerabilities-discovered-and-exploited-e8e26aa0bc68">https://blog.securityevaluators.com/tenda-ac1900-vulnerabilities-discovered-and-exploited-e8e26aa0bc68</a></p>
+<h4 id="未授权访问-认证绕过"><a href="#未授权访问-认证绕过" class="headerlink" title="未授权访问/认证绕过"></a>未授权访问/认证绕过</h4><p><a target="_blank" rel="noopener" href="https://mrxn.net/jswz/tenda-authentic-bypass.html/comment-page-2">实测绕过腾达某型号路由器后台登陆认证，获得管理权限</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/183998">如何日穿自家光猫</a></p>
+<p><a target="_blank" rel="noopener" href="https://nosec.org/home/detail/1913.html">D-Link多型号路由器存在任意文件下载漏洞（CVE-2018-10822）</a></p>
+<p><a target="_blank" rel="noopener" href="https://nosec.org/home/detail/2949.html">某些型号的Comba和D-Link路由器存在管理员密码泄露漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://jalalsela.com/zxhn-h108n-router-web-shell-secrets/">ZXHN H108N Router Web-Shell and Secrets</a></p>
+<p><a target="_blank" rel="noopener" href="https://cyberloginit.com/2019/09/10/dlink-shareport-web-access-authentication-bypass.html">Dlink Shareport Web Access Authentication Bypass</a></p>
+<p><a target="_blank" rel="noopener" href="https://ktln2.org/2020/03/05/cve-2020-9544/">CVE-2020-9544: DLink DSL-2640B un-authenticated firmware upgrade</a></p>
+<h4 id="信息泄露"><a href="#信息泄露" class="headerlink" title="信息泄露"></a>信息泄露</h4><p><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/042047440649.htm">影响 NETGEAR 路由器的 0-Day：KCodes NetUSB 两个安全漏洞披露（CVE-2019-5016/5017）</a></p>
+<h4 id="堆漏洞利用"><a href="#堆漏洞利用" class="headerlink" title="堆漏洞利用"></a>堆漏洞利用</h4><p><a target="_blank" rel="noopener" href="https://www.zerodayinitiative.com/blog/2020/6/24/zdi-20-709-heap-overflow-in-the-netgear-nighthawk-r6700-router">HEAP OVERFLOW IN THE NETGEAR NIGHTHAWK R6700 ROUTER</a></p>
+<h4 id="MikroTik"><a href="#MikroTik" class="headerlink" title="MikroTik"></a>MikroTik</h4><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/183451">MikroTik RouterOS</a></p>
+<h3 id="UPNP-相关漏洞"><a href="#UPNP-相关漏洞" class="headerlink" title="UPNP 相关漏洞"></a>UPNP 相关漏洞</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e41aa1428df3">P2P 网络核心技术：UPnP 和 SSDP 协议</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.360doc.com/content/14/1009/17/13468863_415575489.shtml">http://www.360doc.com/content/14/1009/17/13468863_415575489.shtml</a></p>
+<p><a target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=upnp">https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=upnp</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/reevesrs24/CVE/blob/master/D-Link_DIR-615/xss_UPnP/dlink_dir615_xss_upnp.md">D-Link DIR-615 XSS Via the UPnP Protocol</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.attacker.cc/index.php/archives/113/">UPnP 安全（二）：UPnP 协议具体流程</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7039">D-Link DIR-859 —未经身份验证的RCE(CVE-2019–17621)</a></p>
+<h3 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h3><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/news/193340.html">路由器抓包分析之 SMB 篇</a></p>
+<h3 id="SNMP"><a href="#SNMP" class="headerlink" title="SNMP"></a>SNMP</h3><p><a target="_blank" rel="noopener" href="https://paper.seebug.org/795/">多种设备基于 SNMP 协议的敏感信息泄露漏洞数据分析报告</a></p>
+<h2 id="摄像头安全"><a href="#摄像头安全" class="headerlink" title="摄像头安全"></a>摄像头安全</h2><p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/terminal/207584.html">以某家用摄像头测评入手谈物联网智能家居安全</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/185336">vivetok 摄像头远程栈溢出漏洞分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/178795">智能摄像头安全分析及案例参考</a></p>
+<p><a target="_blank" rel="noopener" href="http://invicsfate.cc/2018/10/09/%E7%BB%95%E8%BF%87%E6%9F%90%E6%91%84%E5%83%8F%E5%A4%B4%E6%A0%A1%E9%AA%8C%E6%9C%BA%E5%88%B6%E8%BD%AF%E5%88%B7%E5%9B%BA%E4%BB%B6/">绕过某摄像头校验机制软刷固件</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/eloygn/IT_Security_Research_WirelessIP_camera_family">IT_Security_Research_WirelessIP_camera_family</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/mY3I60dcXQHxof79NvOAFw">一款摄像头的安全测试-1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.pentestpartners.com/security-blog/hacking-the-aldi-ip-cctv-camera-part-2/">一款摄像头的安全测试-2</a></p>
+<p><a target="_blank" rel="noopener" href="https://pierrekim.github.io/blog/2017-03-08-camera-goahead-0day.html">IT Security Research by Pierre</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/column/222661.html">亚马逊Blink智能摄像头曝出劫持漏洞</a><br>- <strong>响应包存在 root 命令注入</strong></p>
+<p><img src="/.io//image.png" alt="image.png-136kB"></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/terminal/203311.html">智能摄像头安全分析及案例参考</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/H4lo/pwn-hisilicon-dvr">海思芯片摄像头后后门、硬编码、栈溢出</a><br><a target="_blank" rel="noopener" href="https://ssd-disclosure.com/archives/3025">https://ssd-disclosure.com/archives/3025</a></p>
+<p><a target="_blank" rel="noopener" href="https://nosec.org/home/detail/4213.html">Qemu复现雄迈摄像头固件漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.0x42424242.in/xiongmai/5">https://www.0x42424242.in/xiongmai/5</a></p>
+<p><a target="_blank" rel="noopener" href="https://habr.com/en/post/486856/">Full disclosure: 0day vulnerability (backdoor) in firmware for Xiaongmai-based DVRs, NVRs and IP cameras</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mmseh/p/6537924.html">https://www.cnblogs.com/mmseh/p/6537924.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.pentestpartners.com/security-blog/pwning-cctv-cameras/">pwning-cctv-cameras</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.seebug.org/vuldb/ssvid-92493">AVTECH DVR设置无需用户登录的命令执行漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.lstazl.com/1252-2/">JAWS/1.0 漏洞复现（摄像头）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/179155.html">酷视(NEO Coolcam)网络摄像头登录绕过及多个基于堆栈溢出的远程代码执行漏洞及数</a><br><a target="_blank" rel="noopener" href="https://paper.seebug.org/653/">https://paper.seebug.org/653/</a></p>
+<p><a target="_blank" rel="noopener" href="https://wjmccann.github.io/blog/2017/11/11/The-Scary-World-Of-Baby-Monitor-Hacking">The Scary World of Baby Monitor ‘Hacking’</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@lucasteske/reverse-engineering-cheap-chinese-vrcam-protocol-515c37a9c954">Reverse Engineering cheap chinese “VRCAM” protocol</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.mottoin.com/detail/1073.html">http://www.mottoin.com/detail/1073.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://hackdig.com/09/hack-144472.htm">DCS-2530L 信息泄露漏洞</a></p>
+<h3 id="默认密码和默认-RTSP-流链接"><a href="#默认密码和默认-RTSP-流链接" class="headerlink" title="默认密码和默认 RTSP 流链接"></a>默认密码和默认 RTSP 流链接</h3><p><a target="_blank" rel="noopener" href="http://www.360doc.com/content/18/0422/10/6932394_747914433.shtml">http://www.360doc.com/content/18/0422/10/6932394_747914433.shtml</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jin_huan11/article/details/78834284">各主流摄像头的rtsp地址格式</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shuiche/p/12187275.html">常见网络摄像机(摄像头)的端口及RTSP地址</a></p>
+<h2 id="门锁安全"><a href="#门锁安全" class="headerlink" title="门锁安全"></a>门锁安全</h2><p><a target="_blank" rel="noopener" href="https://nosec.org/home/detail/2760.html">硬件安全|智能门锁安全研究方法总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secrss.com/articles/6376">CNCERT：智能门锁网络安全分析报告</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aEeVM5wLb0qozU3CfDmRVg">看大佬如何破解智能门锁</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/aEeVM5wLb0qozU3CfDmRVg">https://mp.weixin.qq.com/s/aEeVM5wLb0qozU3CfDmRVg</a></p>
+<p>[<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-259530.htm">原创][PwnMonkey]果加智能门锁的全面分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.pentestpartners.com/security-blog/nrf51822-code-readout-protection-bypass-a-how-to/">NRF51822 code readout protection bypass- a how-to</a></p>
+<p><a target="_blank" rel="noopener" href="https://paper.seebug.org/1320/#6">海康萤石智能门锁的网关分析</a></p>
+<h2 id="智能音箱安全"><a href="#智能音箱安全" class="headerlink" title="智能音箱安全"></a>智能音箱安全</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4kO3pU_tCDZmgj2CkROzMg">物联网安全系列之远程破解Google Home</a></p>
+<h2 id="嵌入式-裸机设备固件逆向"><a href="#嵌入式-裸机设备固件逆向" class="headerlink" title="嵌入式/裸机设备固件逆向"></a>嵌入式/裸机设备固件逆向</h2><p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-247140.htm">嵌入式逆向工程入门：STM32F103C8T6 上 的 FreeRTOS &amp; Libopencm3</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28294785">嵌入式设备硬件 PCB 级逆向</a><br><a target="_blank" rel="noopener" href="http://blog.nsfocus.net/firmware-extraction/">渗透低性能智能设备的关键技术-固件提取</a><br><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/209364">硬件安全系列——ARM Cortex-M4固件逆向分析</a><br><a target="_blank" rel="noopener" href="https://sec.thief.one/article_content?a_id=2630af99d989c3651292c6ed9868a686">绕过读保护技术_某共享单车蓝牙锁固件提取</a></p>
+<h2 id="智能终端"><a href="#智能终端" class="headerlink" title="智能终端"></a>智能终端</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/VCZOR9Bw-8ecIqRysUYxKQ">自助终端设备安全剖析</a></p>
+<h2 id="智能手环-amp-智能手表"><a href="#智能手环-amp-智能手表" class="headerlink" title="智能手环 &amp; 智能手表"></a>智能手环 &amp; 智能手表</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ELgX3dC0IZ9IIc-O2uXIJg">对BLE智能手环的测试</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/M_rJkNsqlFjIv3OWL9Q7FQ">关于一次智能手表的探索</a><br><a target="_blank" rel="noopener" href="http://drops.xmd5.com/static/drops/wireless-15139.html">破解微软智能手环</a></p>
+<h2 id="其他智能设备-工控设备"><a href="#其他智能设备-工控设备" class="headerlink" title="其他智能设备/工控设备"></a>其他智能设备/工控设备</h2><p><a target="_blank" rel="noopener" href="https://www.exploitee.rs/index.php/FireFU_Exploit">https://www.exploitee.rs/index.php/FireFU_Exploit</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/114741.html">网络设备漏洞分析技术研究（KCON2016议题）</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2664">2018年 KCon 议题解读 | 智能家居安全——身份劫持</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/network/213897.html">如何PWN掉西门子工控设备</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/D8Q9jgk4TodLPf4GoqTfGg">指纹锁的硬件逆向工程</a></p>
+<p><a target="_blank" rel="noopener" href="http://39.elecfans.com/20170804537214_3.html">攻击案例 – 数字密码锁 - 手把手DIY，教你强攻嵌入式设备那些黑科技</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/d8qi8F-M3g857LwZJff-_g">分析逆向通信HACK升降桌后感想</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/214730">Schnelder - 500NAC 固件分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/157784">Wemo Insight 智能插座缓冲区溢出漏洞及其利用分析</a></p>
+<p><a target="_blank" rel="noopener" href="https://netsecurity.51cto.com/art/201909/603441.htm">https://netsecurity.51cto.com/art/201909/603441.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://securityintelligence.com/posts/critical-rce-vulnerability-in-tp-link-wi-fi-extenders-can-grant-attackers-remote-control/">TP-LINK WIFI 扩展器命令执行漏洞</a></p>
+<h2 id="网络设备"><a href="#网络设备" class="headerlink" title="网络设备"></a>网络设备</h2><h3 id="NAS"><a href="#NAS" class="headerlink" title="NAS"></a>NAS</h3><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/85673">【技术分享】看我如何黑掉西部数码的NAS设备（含演示视频）</a></p>
+<h3 id="sonicewall"><a href="#sonicewall" class="headerlink" title="sonicewall"></a>sonicewall</h3><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/198663">SonicWall SRA及SMA多个漏洞分析</a></p>
+<h2 id="无线电安全"><a href="#无线电安全" class="headerlink" title="无线电安全"></a>无线电安全</h2><p><a target="_blank" rel="noopener" href="https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20200226-wi-fi-info-disclosure">Wi-Fi Protected Network and Wi-Fi Protected Network 2 Information Disclosure Vulnerability</a></p>
+<h3 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h3><p><a target="_blank" rel="noopener" href="https://sec.xiaomi.com/article?id=14">https://sec.xiaomi.com/article?id=14</a></p>
+<h3 id="zigbee"><a href="#zigbee" class="headerlink" title="zigbee"></a>zigbee</h3><p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/85028">【技术分享】打造基于Zigbee的IoT漏洞安全试验环境</a></p>
+<h2 id="漏洞挖掘思路-技巧"><a href="#漏洞挖掘思路-技巧" class="headerlink" title="漏洞挖掘思路/技巧"></a>漏洞挖掘思路/技巧</h2><blockquote>
+<p>智能硬件的攻击面也主要在 协议 这一块， 比如协议数据的加密问题， 协议的权限问题，认证机制以及对数据的处理问题（堆栈溢出）</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hac425/p/9674758.html">https://www.cnblogs.com/hac425/p/9674758.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cq674350529.github.io/2019/03/18/D-Link-DIR-850L%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%86%E6%9E%90%E4%B9%8B%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87shell/">D-Link DIR-850L路由器分析之获取设备shell</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/95055">对嵌入式设备的逆向分析与漏洞利用：软件栈（第一部分）</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-230095.htm">看雪2018峰会回顾_智能设备漏洞挖掘中几个突破点(内有十种固件提取方法和首次公开uboot提取固件方法)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/180714">路由器0day漏洞挖掘实战</a></p>
+<p>浅谈路由器漏洞挖掘（科普文）</p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/6374">嵌入式设备中上传文件方法总结</a></p>
+<p><a target="_blank" rel="noopener" href="https://quentinkaiser.be/exploitdev/2020/07/14/breaking-cisco-rv-again/">https://quentinkaiser.be/exploitdev/2020/07/14/breaking-cisco-rv-again/</a></p>
+<h2 id="安全启动"><a href="#安全启动" class="headerlink" title="安全启动"></a>安全启动</h2><p>[<a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-260399.htm">原创]浅析安全启动（Secure Boot）</a></p>
+<h2 id="相关工具使用"><a href="#相关工具使用" class="headerlink" title="相关工具使用"></a>相关工具使用</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI0MDY1MDU4MQ==&mid=2247493390&idx=2&sn=94582aa41410f53b608ec803c1fb8203&chksm=e9153734de62be22558307ba47f949345c2ed9dd445d215d9786f45e556394f151b8558f3cf1&scene=21#wechat_redirect">固件逆向分析过程中的工具和技巧（上）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.chainnews.com/articles/550133689280.htm">固件逆向分析过程中的工具和技巧（下）</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zcutlip/bowcaster">mips 漏洞利用框架</a></p>
+<p><a target="_blank" rel="noopener" href="https://tools.kali.org/information-gathering/miranda">Miranda</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/IoT-PTv/List-of-Tools">https://github.com/IoT-PTv/List-of-Tools</a></p>
+<h2 id="IOT-安全开发"><a href="#IOT-安全开发" class="headerlink" title="IOT 安全开发"></a>IOT 安全开发</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/O1sJv5IBGJVZCbPGqUNHjw">假如你的灯被入侵了</a></p>
+<h2 id="IOT-大牛博客"><a href="#IOT-大牛博客" class="headerlink" title="IOT 大牛博客"></a>IOT 大牛博客</h2><p><a target="_blank" rel="noopener" href="http://www.devttys0.com/blog/">devttys0</a><br><a target="_blank" rel="noopener" href="http://www.giantbranch.cn/">giantbranch</a><br><a target="_blank" rel="noopener" href="https://github.com/xinali/articles">https://github.com/xinali/articles</a><br><a target="_blank" rel="noopener" href="http://galaxylab.com.cn/">银河安全实验室</a><br><a target="_blank" rel="noopener" href="https://cq674350529.github.io/categories/IoT/">cq</a><br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/hac425/">hac425</a><br><a target="_blank" rel="noopener" href="https://sec-wiki.com/news/search?wd=%E8%B7%AF%E7%94%B1%E5%99%A8">secwiki 路由器漏洞相关资料</a><br><a target="_blank" rel="noopener" href="https://github.com/leonW7?tab=repositories">https://github.com/leonW7?tab=repositories</a><br><a target="_blank" rel="noopener" href="https://ray-cp.github.io/">ray-cp</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jayway0day/">jayway0day</a><br><a target="_blank" rel="noopener" href="https://wzt.ac.cn/2020/01/10/firmadyne2/">https://wzt.ac.cn/2020/01/10/firmadyne2/</a><br><a target="_blank" rel="noopener" href="http://www.gandalf.site/">http://www.gandalf.site/</a><br><a target="_blank" rel="noopener" href="https://jalalsela.com/">jalalsela</a><br><a target="_blank" rel="noopener" href="https://iot-security.wiki/">伏宸安全实验室</a><br><a target="_blank" rel="noopener" href="http://www.atomsec.org/">http://www.atomsec.org/</a><br><a target="_blank" rel="noopener" href="https://felipe.astroza.cl/">https://felipe.astroza.cl/</a><br><a target="_blank" rel="noopener" href="https://blog.3or.de/">https://blog.3or.de/</a><br><a target="_blank" rel="noopener" href="https://www.0x42424242.in/">https://www.0x42424242.in/</a><br><a target="_blank" rel="noopener" href="https://delikely.github.io/2099/01/01/IOT-%E6%BC%8F%E6%B4%9E%E6%94%B6%E9%9B%86/">IOT 漏洞收集</a><br><a target="_blank" rel="noopener" href="http://soh0ro0t.monster/">http://soh0ro0t.monster/</a><br><a target="_blank" rel="noopener" href="https://sploit.tech/2019/12/16/Realtek-TOTOLINK.html">https://sploit.tech/2019/12/16/Realtek-TOTOLINK.html</a><br><a target="_blank" rel="noopener" href="https://larry.ngrep.me/">larryxi</a><br><a target="_blank" rel="noopener" href="https://kabeor.cn/">https://kabeor.cn/</a></p>
+<h2 id="fuzz-amp-amp-unicorn"><a href="#fuzz-amp-amp-unicorn" class="headerlink" title="fuzz &amp;&amp; unicorn"></a>fuzz &amp;&amp; unicorn</h2><p><a target="_blank" rel="noopener" href="http://galaxylab.com.cn/%E5%9F%BA%E4%BA%8E-unicorn-%E7%9A%84%E5%8D%95%E4%B8%AA%E5%87%BD%E6%95%B0%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8C%E5%92%8C-fuzzer-%E5%AE%9E%E7%8E%B0/">基于 unicorn 的单个函数模拟执行和 fuzzer 实现</a></p>
+<p><a target="_blank" rel="noopener" href="http://galaxylab.com.cn/%E5%9F%BA%E4%BA%8Eunicorn%E5%92%8Clibfuzzer%E7%9A%84%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8Cfuzzing/">基于Unicorn和LibFuzzer的模拟执行fuzzing</a></p>
+<p><a target="_blank" rel="noopener" href="http://galaxylab.com.cn/afl%E4%BD%BF%E7%94%A8101/">American Fuzzy Lop/AFL使用/</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/hackernoon/afl-unicorn-fuzzing-arbitrary-binary-code-563ca28936bf">IoT设备固件分析之网络协议fuzz</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/WangAoBo/p/8280352.html">M4x - afl-fuzz技术初探</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/5155">初探BooFuzz</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/studyskill/category/1028655.html">https://www.cnblogs.com/studyskill/category/1028655.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tuicool.com/articles/j2eqym6">初探Windows Fuzzing神器—-Winafl</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/71898.html">fuzz实战之libfuzzer</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Dor1s/libfuzzer-workshop/tree/master/lessons">https://github.com/Dor1s/libfuzzer-workshop/tree/master/lessons</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/213347.html">Cotopaxi：使用指定IoT网络协议对IoT设备进行安全测试</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-253868.htm">Unicorn 在 Android 的应用</a></p>
+<p><a target="_blank" rel="noopener" href="http://galaxylab.com.cn/%E5%9F%BA%E4%BA%8Eunicorn%E5%92%8Clibfuzzer%E7%9A%84%E6%A8%A1%E6%8B%9F%E6%89%A7%E8%A1%8Cfuzzing/">基于Unicorn和LibFuzzer的模拟执行fuzzing</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ics-cert.org.cn/portal/page/133/cf6ae40284a9445098bc4876eaa701b1.html">IOTFUZZER：通过基于应用程序的模糊测试发现物联网中的内存损坏</a></p>
+<ul>
+<li>相关视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Ys2FBmdbdIw">https://www.youtube.com/watch?v=Ys2FBmdbdIw</a></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://www.usenix.org/conference/usenixsecurity19/presentation/zheng">FIRM-AFL: High-Throughput Greybox Fuzzing of IoT Firmware via Augmented Process Emulation</a></p>
+<p><a target="_blank" rel="noopener" href="https://firmianay.github.io/2018/06/14/firmalice.html">Firmalice - Automatic Detection of Authentication Bypass Vulnerabilities in Binary Firmware</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/170078">利用Marvell Avastar Wi-Fi中的漏洞远程控制设备：从零知识入门到RCE漏洞挖掘利用（下）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/song_lee/article/details/104334096">IoT 设备网络协议模糊测试工具boofuzz实战</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2805">提高AFL qemu模式性能</a></p>
+<h2 id="IOT-安全视频教学"><a href="#IOT-安全视频教学" class="headerlink" title="IOT 安全视频教学"></a>IOT 安全视频教学</h2><p><a target="_blank" rel="noopener" href="https://www.bugbank.cn/live/view.html?id=112706">边界IOT漏洞挖掘精要</a><br><a target="_blank" rel="noopener" href="https://www.bugbank.cn/live/view.html?id=112432">家用路由器漏洞挖掘入门</a><br><a target="_blank" rel="noopener" href="https://live.freebuf.com/detail/9c82bef60253479f3df1c0f2c802cebf">物联网设备漏洞挖掘思路与技巧</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ZojMGy_4e3Uvlsu5dnGWPA">ChaMd5安全团队 带你入坑物联网安全</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PE411E7Sz?from=search&seid=14546198786268353402">2020-2-29-知世-公开课-路由器PWN</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1CE411s7YX?from=search&seid=14546198786268353402">「突围」联合线上技术直播沙龙完整录屏丨漏洞银行直播回顾 - 2020.2.26 - AIOT 安全</a></p>
+<h2 id="固件加密"><a href="#固件加密" class="headerlink" title="固件加密"></a>固件加密</h2><p><a target="_blank" rel="noopener" href="https://www.docin.com/p-882254908.html">https://www.docin.com/p-882254908.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1005700">四个字节的安全 ：一次固件加密算法的逆向分析</a></p>
+<h2 id="CTF-题目"><a href="#CTF-题目" class="headerlink" title="CTF 题目"></a>CTF 题目</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/77293121030e">Real World Finals 2018 Router</a></p>
+<p><a target="_blank" rel="noopener" href="https://e3pem.github.io/2019/08/26/0ctf-2019/embedded_heap/">0ctf2019 Final embedded_heap题解</a></p>
+<h2 id="国外技术文章"><a href="#国外技术文章" class="headerlink" title="国外技术文章"></a>国外技术文章</h2><p><a target="_blank" rel="noopener" href="https://books.google.com.hk/books?id=6mOIToQVmO8C&pg=PA12&lpg=PA12&dq=vxworks%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F&source=bl&ots=uW-tX2dsbb&sig=ACfU3U0Tc8aNc0riddaXeiE3JcPjb3kLDA&hl=zh-CN&sa=X&redir_esc=y#v=onepage&q=vxworks%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F&f=false">afl-unicorn: Fuzzing Arbitrary Binary Code</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.routerpwn.com/">http://www.routerpwn.com/</a></p>
+<p><a target="_blank" rel="noopener" href="https://firmwaresecurity.com/">https://firmwaresecurity.com/</a></p>
+<p><a target="_blank" rel="noopener" href="https://wrongbaud.github.io/router-teardown/?nsukey=/KEjloh+bczobN+EikQIFSrIO5FNmTQtFzGV7FrN6YNrvYQS+kO4fywtTv/q1sEax7raeB39N9XOi3/WoKSVnubD5g6HwnCZmStBFDzStFK64j0fUo0KToypAbXs2Wu3KVIqvvCjFS0PmO5UepBb9ntN7By04QxMDcrPQFheOCeHoM8j7bb0RMQYopkVYnqE5yui/ho8htfYOTn0LfHZdw==">路由器分析之硬件拆卸</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.3or.de/">https://blog.3or.de/</a></p>
+<h2 id="固件安全相关论文"><a href="#固件安全相关论文" class="headerlink" title="固件安全相关论文"></a>固件安全相关论文</h2><h2 id="嵌入式基础知识"><a href="#嵌入式基础知识" class="headerlink" title="嵌入式基础知识"></a>嵌入式基础知识</h2><p>uboot</p>
+<p>uimage</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/01e5dd7c979a">https://www.jianshu.com/p/01e5dd7c979a</a></p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://elinux.org/File_Systems">https://elinux.org/File_Systems</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/utcyVK41-iIzQUPeT5Zq9g6%E7%B3%BB%E7%BB%9F&f=false">linux 与嵌入式系统</a></li>
+</ol>
+<h2 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h2><p>解压 lzma 格式压缩数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lzma -kdc A200.lzma &gt; A200lzmadec -kd fwr2.lzma&gt;fwr22</span><br></pre></td></tr></table></figure>
+
+<h3 id="jffs2-文件系统的处理"><a href="#jffs2-文件系统的处理" class="headerlink" title="jffs2 文件系统的处理"></a>jffs2 文件系统的处理</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/axlrose/1317610">https://blog.51cto.com/axlrose/1317610</a></li>
+<li><code>binwalk -Me xxx.bin</code></li>
+</ol>
+<h2 id="路由器固件下载"><a href="#路由器固件下载" class="headerlink" title="路由器固件下载"></a>路由器固件下载</h2><p><a target="_blank" rel="noopener" href="http://www.totolink.cn/index.php/Download/list/121.html">TOTOLINK</a><br><a target="_blank" rel="noopener" href="http://www.totolink.net/">http://www.totolink.net/</a><br><a target="_blank" rel="noopener" href="https://service.fastcom.com.cn/download-list.html#0">FAST</a><br><a target="_blank" rel="noopener" href="https://app.hiwifi.com/dstore.php?m=download&a=info">极路由/hiwifi</a><br><a href="ftp://ftp2.dlink.com/PRODUCTS">D-LINK</a><br><a target="_blank" rel="noopener" href="https://service.tp-link.com.cn/download?classtip=software&p=1&o=0">TP-LINK</a><br><a target="_blank" rel="noopener" href="https://service.mercurycom.com.cn/download-list.html">MERCURY</a><br><a target="_blank" rel="noopener" href="https://www.tenda.com.cn/download/cata-11.html">Tenda</a><br><a target="_blank" rel="noopener" href="http://www.netcoretec.com/download.html">磊科</a><br><a target="_blank" rel="noopener" href="http://www.wayos.com/download/luyougujian.html">维盟</a><br><a target="_blank" rel="noopener" href="http://www.wayos.com:8081/download/">http://www.wayos.com:8081/download/</a><br><a target="_blank" rel="noopener" href="https://www.utt.com.cn/downloadcenter.php">艾泰</a><br><a target="_blank" rel="noopener" href="http://www.ruijie.com.cn/fw/rj/">锐捷路由器</a><br><a target="_blank" rel="noopener" href="http://www.adslr.com/companyfile/2/">飞鱼星</a><br><a target="_blank" rel="noopener" href="http://www.newifi.com/download.shtml">newifi</a><br><a target="_blank" rel="noopener" href="http://www.b-link.net.cn/download.php?CateId=11">b-link</a><br><a target="_blank" rel="noopener" href="https://www.asus.com.cn/support/Download-Center/">华硕</a><br><a target="_blank" rel="noopener" href="https://www.tenda.com.cn/download/cata-11.html">腾达</a><br><a target="_blank" rel="noopener" href="http://www.tuoshi.cn/download.asp">拓实</a><br><a target="_blank" rel="noopener" href="http://www.netis-systems.com/Suppory/de_details/id/1/de/50.html">netis</a><br><a target="_blank" rel="noopener" href="https://www.asus.com.cn/Networking/RTAC68U/HelpDesk_BIOS/">华硕</a><br><a target="_blank" rel="noopener" href="https://www.draytek.com.tw/ftp/">draytek</a><br><a target="_blank" rel="noopener" href="http://www.grandstream.cn/Xiazai.aspx?TypeId=65">grandstream</a><br><a target="_blank" rel="noopener" href="http://www.grandstream.com/support/firmware/">http://www.grandstream.com/support/firmware/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.linksys.com/us/support-article/?articleNum=114663">linksys</a><br><a target="_blank" rel="noopener" href="https://support.ruckuswireless.com/software?direction=desc&sort=updated_at">ruckuswireless</a><br><a target="_blank" rel="noopener" href="https://www.netgear.com/support/product/R7000.aspx#download">netgear</a><br><a target="_blank" rel="noopener" href="https://software.cisco.com/download/home/283000185">cisco</a></p>
+<h2 id="摄像头固件"><a href="#摄像头固件" class="headerlink" title="摄像头固件"></a>摄像头固件</h2><p><a target="_blank" rel="noopener" href="https://security.tp-link.com.cn/service/download?classtip=2&p=1&o=0">tp-link</a><br><a target="_blank" rel="noopener" href="https://www.xiongmaitech.com/service/down/13">杭州-雄迈</a><br><a target="_blank" rel="noopener" href="https://avtech.com/support/">avtech</a><br><a target="_blank" rel="noopener" href="https://drivers.softpedia.com/get/network-ip-surveillance-baby-camera/AVTECH/AVTECH-AVH0801-NVR-Firmware-1012.shtml">https://drivers.softpedia.com/get/network-ip-surveillance-baby-camera/AVTECH/AVTECH-AVH0801-NVR-Firmware-1012.shtml</a><br><a target="_blank" rel="noopener" href="https://support.wdc.com/downloads.aspx?lang=cn#firmware">https://support.wdc.com/downloads.aspx?lang=cn#firmware</a></p>
+<h2 id="设备供应商"><a href="#设备供应商" class="headerlink" title="设备供应商"></a>设备供应商</h2><p><a target="_blank" rel="noopener" href="http://www.sapido.com.tw/TC/product-system.htm">sapido</a><br><a target="_blank" rel="noopener" href="https://www.ciktel.com/Devices/Router">https://www.ciktel.com/Devices/Router</a><br><a target="_blank" rel="noopener" href="https://auth1.ruckuswireless.com/login?referer=/oauth/authorize?client_id=f26a12b68eda21c97c3cbdec2dfb96ce31d46d8e995e190bf81f83e4b5e24d11&redirect_uri=https://support.ruckuswireless.com/callback&response_type=code&scope=public">https://auth1.ruckuswireless.com/login?referer=%2Foauth%2Fauthorize%3Fclient_id%3Df26a12b68eda21c97c3cbdec2dfb96ce31d46d8e995e190bf81f83e4b5e24d11%26redirect_uri%3Dhttps%253A%252F%252Fsupport.ruckuswireless.com%252Fcallback%26response_type%3Dcode%26scope%3Dpublic</a><br><a target="_blank" rel="noopener" href="http://fibergate.cc/services.html">http://fibergate.cc/services.html</a><br><a target="_blank" rel="noopener" href="http://www.totolink.cn/">http://www.totolink.cn/</a><br><a target="_blank" rel="noopener" href="http://www.trendnet.com.cn/gywm">http://www.trendnet.com.cn/gywm</a><br><a target="_blank" rel="noopener" href="http://ubnt.joint-harvest.com/">http://ubnt.joint-harvest.com/</a><br><a target="_blank" rel="noopener" href="http://www.grandstream.com/">http://www.grandstream.com/</a><br><a target="_blank" rel="noopener" href="https://drivers.softpedia.com/get/Router-Switch-Access-Point/?utm_source=spd&amp;utm_campaign=postdl_redir">https://drivers.softpedia.com/get/Router-Switch-Access-Point/?utm_source=spd&amp;utm_campaign=postdl_redir</a><br><a target="_blank" rel="noopener" href="https://teltonika-networks.com/">https://teltonika-networks.com/</a><br><a target="_blank" rel="noopener" href="https://software.cisco.com/download/home/282413304">https://software.cisco.com/download/home/282413304</a></p>
+<h2 id="事件报道"><a href="#事件报道" class="headerlink" title="事件报道"></a>事件报道</h2><p><a target="_blank" rel="noopener" href="https://service.fastcom.com.cn/download-list.html#0">4G无线路由曝致命漏洞，攻击者可执行任意代码</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/27312102">破解了十款路由器之后，我们有话要说</a></p>
+<p><a target="_blank" rel="noopener" href="http://newpaper.dahe.cn/dhb/html/2015-03/27/content_1240435.htm?div=-1">数数那些坑你的路由器漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1608672836032406833&wfr=spider&for=pc">腾讯安全团队新发现：智能音箱摇身一变成间谍</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.t00ls.net/articles-54495.html">大量Ruckus路由器出现漏洞，易受黑客攻击</a></p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/E0pEAADV7kMrpTIYqjip0g">启明星辰ADLab：某摄像头产品漏洞分析及解决方案</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.leiphone.com/news/202002/oSS5YNySfUC4ptfy.html">华为海思芯片又有后门？外国研究员刚提出指控，就被打脸了</a></p>
+<h2 id="知识星球"><a href="#知识星球" class="headerlink" title="知识星球"></a>知识星球</h2><p><img src="http://static.zybuluo.com/H4l0/mv5wagjw4v279qlohwdqlfv4/image.png" alt="image.png-200.9kB"></p>
+<p>[79 <a target="_blank" rel="noopener" href="https://service.fastcom.com.cn/downloa##">https://service.fastcom.com.cn/downloa##</a> 标题 ##d-list.html#0</p>
+<p><strong>+</strong></p>
+
+    </div>
+
+    
+    
+    
+
+<div>
+   
+    <div> <div style="text-align:center;color:#bfbfbf;font-size:16px;"> <span>-------- 春花秋月 </span> <i class="fa fa-paw"></i> <span> 夏荷冬雪 --------</span> </div> </div>
+  
+</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JimsZack
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jimszack.github.io/2021/03/26/%E7%89%A9%E8%81%94%E7%BD%91%E5%AD%A6%E4%B9%A0/" title="物联网学习">https://jimszack.github.io/2021/03/26/物联网学习/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%89%E5%85%A8/" rel="tag"># 安全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/25/PTA%E7%AC%94%E8%AE%B0-L2/" rel="prev" title="PTA笔记-L2">
+      <i class="fa fa-chevron-left"></i> PTA笔记-L2
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjE1MC8yMjY2MQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IOT-%E5%AE%89%E5%85%A8%E5%AE%9E%E6%88%98%E8%B5%84%E6%96%99%E6%94%B6%E9%9B%86%E6%95%B4%E5%90%88"><span class="nav-number">1.</span> <span class="nav-text">IOT 安全实战资料收集整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E6%89%8B%E5%90%91-%E6%80%BB%E7%BB%93%E6%80%A7%E8%B5%84%E6%96%99"><span class="nav-number">1.1.</span> <span class="nav-text">新手向|总结性资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E6%A8%A1%E6%8B%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.2.</span> <span class="nav-text">固件模拟环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E6%8F%90%E5%8F%96-amp-%E5%9B%BA%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">固件提取&amp;固件分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vxworks%E3%80%81RTOS-%E7%B3%BB%E7%BB%9F%E5%9B%BA%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">Vxworks、RTOS 系统固件分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%B8%E6%9C%BA%E5%9B%BA%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">裸机固件分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E5%8A%A0%E5%AF%86%E5%A4%84%E7%90%86"><span class="nav-number">1.6.</span> <span class="nav-text">固件加密处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E4%BF%AE%E6%94%B9-%E9%87%8D%E6%89%93%E5%8C%85"><span class="nav-number">1.6.1.</span> <span class="nav-text">固件修改&#x2F;重打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E8%B0%83%E8%AF%95"><span class="nav-number">1.6.2.</span> <span class="nav-text">固件调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.6.3.</span> <span class="nav-text">信息收集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="nav-number">1.7.</span> <span class="nav-text">实例漏洞分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-number">1.7.1.</span> <span class="nav-text">路由器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.7.1.1.</span> <span class="nav-text">命令执行漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1-amp-%E6%A0%88%E6%BA%A2%E5%87%BA"><span class="nav-number">1.7.1.2.</span> <span class="nav-text">拒绝服务&amp;栈溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE-%E8%AE%A4%E8%AF%81%E7%BB%95%E8%BF%87"><span class="nav-number">1.7.1.3.</span> <span class="nav-text">未授权访问&#x2F;认证绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2"><span class="nav-number">1.7.1.4.</span> <span class="nav-text">信息泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A0%86%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="nav-number">1.7.1.5.</span> <span class="nav-text">堆漏洞利用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MikroTik"><span class="nav-number">1.7.1.6.</span> <span class="nav-text">MikroTik</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UPNP-%E7%9B%B8%E5%85%B3%E6%BC%8F%E6%B4%9E"><span class="nav-number">1.7.2.</span> <span class="nav-text">UPNP 相关漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB"><span class="nav-number">1.7.3.</span> <span class="nav-text">SMB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP"><span class="nav-number">1.7.4.</span> <span class="nav-text">SNMP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E5%A4%B4%E5%AE%89%E5%85%A8"><span class="nav-number">1.8.</span> <span class="nav-text">摄像头安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E5%AF%86%E7%A0%81%E5%92%8C%E9%BB%98%E8%AE%A4-RTSP-%E6%B5%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.8.1.</span> <span class="nav-text">默认密码和默认 RTSP 流链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%A8%E9%94%81%E5%AE%89%E5%85%A8"><span class="nav-number">1.9.</span> <span class="nav-text">门锁安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E9%9F%B3%E7%AE%B1%E5%AE%89%E5%85%A8"><span class="nav-number">1.10.</span> <span class="nav-text">智能音箱安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F-%E8%A3%B8%E6%9C%BA%E8%AE%BE%E5%A4%87%E5%9B%BA%E4%BB%B6%E9%80%86%E5%90%91"><span class="nav-number">1.11.</span> <span class="nav-text">嵌入式&#x2F;裸机设备固件逆向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E7%BB%88%E7%AB%AF"><span class="nav-number">1.12.</span> <span class="nav-text">智能终端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%89%8B%E7%8E%AF-amp-%E6%99%BA%E8%83%BD%E6%89%8B%E8%A1%A8"><span class="nav-number">1.13.</span> <span class="nav-text">智能手环 &amp; 智能手表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%99%BA%E8%83%BD%E8%AE%BE%E5%A4%87-%E5%B7%A5%E6%8E%A7%E8%AE%BE%E5%A4%87"><span class="nav-number">1.14.</span> <span class="nav-text">其他智能设备&#x2F;工控设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87"><span class="nav-number">1.15.</span> <span class="nav-text">网络设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NAS"><span class="nav-number">1.15.1.</span> <span class="nav-text">NAS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sonicewall"><span class="nav-number">1.15.2.</span> <span class="nav-text">sonicewall</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E7%94%B5%E5%AE%89%E5%85%A8"><span class="nav-number">1.16.</span> <span class="nav-text">无线电安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%93%9D%E7%89%99"><span class="nav-number">1.16.1.</span> <span class="nav-text">蓝牙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zigbee"><span class="nav-number">1.16.2.</span> <span class="nav-text">zigbee</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF-%E6%8A%80%E5%B7%A7"><span class="nav-number">1.17.</span> <span class="nav-text">漏洞挖掘思路&#x2F;技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E5%90%AF%E5%8A%A8"><span class="nav-number">1.18.</span> <span class="nav-text">安全启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8"><span class="nav-number">1.19.</span> <span class="nav-text">相关工具使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOT-%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91"><span class="nav-number">1.20.</span> <span class="nav-text">IOT 安全开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOT-%E5%A4%A7%E7%89%9B%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.21.</span> <span class="nav-text">IOT 大牛博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fuzz-amp-amp-unicorn"><span class="nav-number">1.22.</span> <span class="nav-text">fuzz &amp;&amp; unicorn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOT-%E5%AE%89%E5%85%A8%E8%A7%86%E9%A2%91%E6%95%99%E5%AD%A6"><span class="nav-number">1.23.</span> <span class="nav-text">IOT 安全视频教学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E5%8A%A0%E5%AF%86"><span class="nav-number">1.24.</span> <span class="nav-text">固件加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CTF-%E9%A2%98%E7%9B%AE"><span class="nav-number">1.25.</span> <span class="nav-text">CTF 题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BD%E5%A4%96%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0"><span class="nav-number">1.26.</span> <span class="nav-text">国外技术文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">1.27.</span> <span class="nav-text">固件安全相关论文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.28.</span> <span class="nav-text">嵌入式基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.29.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.30.</span> <span class="nav-text">相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jffs2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.30.1.</span> <span class="nav-text">jffs2 文件系统的处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%9B%BA%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.31.</span> <span class="nav-text">路由器固件下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BA%E4%BB%B6"><span class="nav-number">1.32.</span> <span class="nav-text">摄像头固件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E5%A4%87%E4%BE%9B%E5%BA%94%E5%95%86"><span class="nav-number">1.33.</span> <span class="nav-text">设备供应商</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E6%8A%A5%E9%81%93"><span class="nav-number">1.34.</span> <span class="nav-text">事件报道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E6%98%9F%E7%90%83"><span class="nav-number">1.35.</span> <span class="nav-text">知识星球</span></a></li></ol></li></ol></div>
+      </div>
+
+
+      <!--/noindex-->
+
+
+
+      <div class="site-overview-wrap sidebar-panel">
+
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JimsZack"
+      src="/images/author.jpg">
+  <p class="site-author-name" itemprop="name">JimsZack</p>
+  <div class="site-description" itemprop="description">优游涵泳</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="sidebar-button motion-element"><i class="fa fa-comment"></i>
+    聊天
+  </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JimsZack" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JimsZack" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/angelsnow1129@163.com" title="E-Mail → angelsnow1129@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+
+<iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=6671522046&auto=1&height=66"></iframe>    
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JimsZack</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>
